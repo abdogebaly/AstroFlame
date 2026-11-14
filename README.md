@@ -62,7 +62,7 @@ flowchart TD
 
 ### 1. Clone & Install Dependencies
 ```bash
-git clone https://github.com/your-username/FlameInFreeFall.git
+git clone https://github.com/abdogebaly/AstroFlame.git
 cd FlameInFreeFall
 pip install pandas numpy scipy scikit-learn matplotlib plotly streamlit
 ```
