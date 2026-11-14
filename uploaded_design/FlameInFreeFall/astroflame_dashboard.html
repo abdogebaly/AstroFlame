@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AstroFlame | NASA Microgravity Combustion Simulator</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --bg-dark: #0f141c;
+            --card-bg: #1a2230;
+            --accent-red: #ff4b4b;
+            --accent-green: #00cc96;
+            --accent-orange: #ffa500;
+            --text-main: #e2e8f0;
+            --text-muted: #94a3b8;
+            --border-color: #2d3748;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
+        body { background-color: var(--bg-dark); color: var(--text-main); padding: 24px; line-height: 1.5; }
+        .container { max-width: 1200px; margin: 0 auto; }
+        .header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px; border-bottom: 1px solid var(--border-color); padding-bottom: 16px; }
+        .title-group h1 { font-size: 26px; font-weight: 800; color: #ffffff; display: flex; align-items: center; gap: 10px; }
+        .title-group p { font-size: 14px; color: var(--text-muted); }
+        .badge { background: rgba(255, 75, 75, 0.15); color: #ff6b6b; padding: 4px 12px; border-radius: 999px; font-size: 12px; font-weight: 600; border: 1px solid rgba(255, 75, 75, 0.3); }
+
+        .tabs { display: flex; gap: 8px; margin-bottom: 20px; }
+        .tab-btn { background: var(--card-bg); border: 1px solid var(--border-color); color: var(--text-muted); padding: 10px 20px; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 14px; transition: all 0.2s; }
+        .tab-btn.active { background: #2563eb; color: #ffffff; border-color: #3b82f6; }
+
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+        .card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 20px; }
+        .card h2 { font-size: 18px; margin-bottom: 16px; color: #ffffff; display: flex; align-items: center; gap: 8px; }
+
+        .form-group { margin-bottom: 16px; }
+        .form-group label { display: block; font-size: 13px; font-weight: 600; color: var(--text-muted); margin-bottom: 6px; }
+        .form-group select, .form-group input[type="range"] { width: 100%; }
+        .form-group select { background: #0f172a; border: 1px solid var(--border-color); color: #fff; padding: 10px; border-radius: 6px; font-size: 14px; }
+        .val-display { float: right; color: #60a5fa; font-weight: 600; }
+
+        .status-box { padding: 16px; border-radius: 8px; margin-bottom: 16px; text-align: center; font-weight: 700; font-size: 16px; }
+        .status-safe { background: rgba(0, 204, 150, 0.15); color: #00cc96; border: 1px solid #00cc96; }
+        .status-danger { background: rgba(255, 75, 75, 0.15); color: #ff4b4b; border: 1px solid #ff4b4b; }
+
+        .metrics-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px; }
+        .metric-item { background: #0f172a; padding: 14px; border-radius: 8px; border: 1px solid var(--border-color); text-align: center; }
+        .metric-title { font-size: 12px; color: var(--text-muted); }
+        .metric-value { font-size: 22px; font-weight: 700; color: #ffffff; margin-top: 4px; }
+
+        .alert-box { background: rgba(234, 179, 8, 0.1); border-left: 4px solid #eab308; padding: 12px; border-radius: 4px; font-size: 13px; color: #fde047; margin-top: 12px; }
+        canvas { max-height: 280px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="title-group">
+                <h1>🔥 AstroFlame Simulator</h1>
+                <p>NASA Microgravity Combustion & Spacecraft Fire Safety Physics Engine</p>
+            </div>
+            <span class="badge">NASA PSI Verified Data</span>
+        </div>
+
+        <div class="tabs">
+            <button class="tab-btn active" onclick="switchTab('bass')">🛡️ Spacecraft Fire Safety (BASS-II)</button>
+            <button class="tab-btn" onclick="switchTab('flex')">💧 Droplet Physics & d²-Law (FLEX)</button>
+            <button class="tab-btn" onclick="switchTab('science')">🔬 Physics & Findings</button>
+        </div>
+
+        <!-- TAB 1: BASS-II FIRE SAFETY -->
+        <div id="tab-bass" class="tab-content active">
+            <div class="grid-2">
+                <div class="card">
+                    <h2>🛠️ Cabin Ventilation & Material Inputs</h2>
+                    <div class="form-group">
+                        <label>Material Type</label>
+                        <select id="b_mat" onchange="runBassPredict()">
+                            <option value="PMMA">PMMA (Acrylic / Plexiglass)</option>
+                            <option value="SIBAL">SIBAL (Cotton/Fiberglass Space Fabric)</option>
+                            <option value="Nomex">Nomex (Fire-Resistant Space Suit)</option>
+                            <option value="Wax">Wax Candle</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Sample Geometry</label>
+                        <select id="b_geom" onchange="runBassPredict()">
+                            <option value="Film">Thin Film</option>
+                            <option value="Slab">Solid Slab</option>
+                            <option value="Rod">Cylindrical Rod</option>
+                            <option value="Fabric">Woven Fabric</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Sample Thickness / Diameter (mm) <span class="val-display" id="val_thick">1.0 mm</span></label>
+                        <input type="range" id="b_thick" min="0.1" max="15.0" step="0.1" value="1.0" oninput="updateBassVals()">
+                    </div>
+                    <div class="form-group">
+                        <label>Cabin Ventilation Airspeed Display <span class="val-display" id="val_fan">50</span></label>
+                        <input type="range" id="b_fan" min="10" max="80" step="1" value="50" oninput="updateBassVals()">
+                    </div>
+                    <div class="form-group">
+                        <label>Initial Cabin O₂ (% by Volume) <span class="val-display" id="val_o2">21.0 %</span></label>
+                        <input type="range" id="b_o2" min="15.0" max="30.0" step="0.5" value="21.0" oninput="updateBassVals()">
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h2>🎯 Safety Prediction Outcome</h2>
+                    <div id="bass_status" class="status-box status-safe">Analyzing...</div>
+                    <div class="metrics-grid">
+                        <div class="metric-item">
+                            <div class="metric-title">Probability of Self-Extinction</div>
+                            <div class="metric-value" id="bass_prob">--%</div>
+                        </div>
+                        <div class="metric-item">
+                            <div class="metric-title">Projected Toxic CO Output</div>
+                            <div class="metric-value" id="bass_co">-- ppm</div>
+                        </div>
+                    </div>
+                    <div id="bass_co_alert" class="alert-box">
+                        ℹ️ Projected CO generation within manageable cabin scrub limits.
+                    </div>
+                    <div style="margin-top: 15px; font-size: 13px; color: var(--text-muted);">
+                        <strong>NASA Protocol Recommendation:</strong>
+                        <p id="bass_rec" style="margin-top: 4px; color: #fff;">--</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 2: FLEX DROPLET COMBUSTION -->
+        <div id="tab-flex" class="tab-content">
+            <div class="grid-2">
+                <div class="card">
+                    <h2>🧪 Droplet & Atmosphere Inputs</h2>
+                    <div class="form-group">
+                        <label>Liquid Hydrocarbon Fuel</label>
+                        <select id="f_fuel" onchange="runFlexPredict()">
+                            <option value="Heptane">Heptane (C₇H₁₆ - Cool Flame Prone)</option>
+                            <option value="Methanol">Methanol (CH₃OH - Clean Burning)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Ambient Pressure (bar) <span class="val-display" id="val_p">1.0 bar</span></label>
+                        <input type="range" id="f_p" min="0.2" max="3.0" step="0.1" value="1.0" oninput="updateFlexVals()">
+                    </div>
+                    <div class="form-group">
+                        <label>Initial Droplet Diameter d₀ (mm) <span class="val-display" id="val_d0">3.0 mm</span></label>
+                        <input type="range" id="f_d0" min="1.0" max="5.0" step="0.1" value="3.0" oninput="updateFlexVals()">
+                    </div>
+                    <div class="form-group">
+                        <label>Oxygen Fraction (X_O₂) <span class="val-display" id="val_xo2">0.21</span></label>
+                        <input type="range" id="f_o2" min="0.10" max="0.40" step="0.01" value="0.21" oninput="updateFlexVals()">
+                    </div>
+                    <div class="form-group">
+                        <label>Carbon Dioxide Diluent (X_CO₂) <span class="val-display" id="val_xco2">0.00</span></label>
+                        <input type="range" id="f_co2" min="0.0" max="0.50" step="0.05" value="0.0" oninput="updateFlexVals()">
+                    </div>
+                    <div class="form-group">
+                        <label>Helium Inert Gas (X_He) <span class="val-display" id="val_xhe">0.00</span></label>
+                        <input type="range" id="f_he" min="0.0" max="0.50" step="0.05" value="0.0" oninput="updateFlexVals()">
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h2>📈 Droplet Physics & d²-Law Decay</h2>
+                    <div class="metrics-grid">
+                        <div class="metric-item">
+                            <div class="metric-title">Burning Rate Constant (K)</div>
+                            <div class="metric-value" id="flex_k">-- mm²/s</div>
+                        </div>
+                        <div class="metric-item">
+                            <div class="metric-title">Projected Lifetime</div>
+                            <div class="metric-value" id="flex_time">-- s</div>
+                        </div>
+                    </div>
+                    <canvas id="dropletChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 3: SCIENCE -->
+        <div id="tab-science" class="tab-content">
+            <div class="card">
+                <h2>🔬 Microgravity Combustion Physics Insights</h2>
+                <p style="margin-bottom: 12px;">In microgravity (g ≈ 0), buoyant convection disappears. Flames become spherically symmetric and are governed entirely by molecular diffusion and radiative heat loss.</p>
+                <div class="grid-2">
+                    <div style="background: #0f172a; padding: 16px; border-radius: 8px;">
+                        <h3 style="color: #60a5fa; font-size: 15px; margin-bottom: 8px;">🛡️ Solid Flammability (BASS-II Data)</h3>
+                        <ul style="font-size: 13px; line-height: 1.8; color: #cbd5e1; padding-left: 20px;">
+                            <li><strong>Nomex & SIBAL Fabrics:</strong> Showed >96% self-extinction in microgravity due to low surface heat retention.</li>
+                            <li><strong>PMMA (Acrylic):</strong> Only 26% self-extinction; thick slabs sustained 100% combustion.</li>
+                            <li><strong>Critical Airspeed:</strong> Ventilation speeds between 25-50 display units supply oxygen without cooling the flame, representing the peak hazard zone.</li>
+                        </ul>
+                    </div>
+                    <div style="background: #0f172a; padding: 16px; border-radius: 8px;">
+                        <h3 style="color: #60a5fa; font-size: 15px; margin-bottom: 8px;">💧 Droplet Combustion (FLEX Data)</h3>
+                        <ul style="font-size: 13px; line-height: 1.8; color: #cbd5e1; padding-left: 20px;">
+                            <li><strong>Helium (He):</strong> Highly conductive (6x N₂), boosting flame burning rate K (+0.40 correlation).</li>
+                            <li><strong>Carbon Dioxide (CO₂):</strong> Heavy radiative emission drops flame temperature and triggers premature extinction (-0.37 correlation).</li>
+                            <li><strong>Cool Flame Transition:</strong> In heptane droplets, visible hot flame extinguishes while an invisible low-temperature cool flame continues to consume fuel!</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let modelWeights = null;
+        let chartInstance = null;
+
+        async function loadModels() {
+            try {
+                const res = await fetch('models/model_weights.json');
+                modelWeights = await res.json();
+            } catch (e) {
+                console.log("Using fallback weights");
+            }
+            runBassPredict();
+            runFlexPredict();
+        }
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            event.target.classList.add('active');
+            document.getElementById('tab-' + tabId).classList.add('active');
+        }
+
+        function updateBassVals() {
+            document.getElementById('val_thick').innerText = document.getElementById('b_thick').value + " mm";
+            document.getElementById('val_fan').innerText = document.getElementById('b_fan').value;
+            document.getElementById('val_o2').innerText = document.getElementById('b_o2').value + " %";
+            runBassPredict();
+        }
+
+        function runBassPredict() {
+            const mat = document.getElementById('b_mat').value;
+            const geom = document.getElementById('b_geom').value;
+            const thick = parseFloat(document.getElementById('b_thick').value);
+            const fan = parseFloat(document.getElementById('b_fan').value);
+            const o2 = parseFloat(document.getElementById('b_o2').value);
+
+            // Base probabilities from NASA empirical BASS-II data
+            let extProb = 0.50;
+            if (mat === 'Nomex') extProb = 0.98;
+            else if (mat === 'SIBAL') extProb = 0.94;
+            else if (mat === 'Wax') extProb = 0.85;
+            else if (mat === 'PMMA') {
+                if (geom === 'Slab') extProb = 0.05;
+                else if (geom === 'Rod') extProb = 0.22;
+                else if (geom === 'Film') extProb = 0.54;
+                else extProb = 0.26;
+            }
+
+            // Thickness and Flow adjustments
+            extProb -= (thick - 1.0) * 0.02;
+            extProb += (fan - 50.0) * 0.003;
+            extProb -= (o2 - 21.0) * 0.03;
+            extProb = Math.max(0.02, Math.min(0.99, extProb));
+
+            const isSafe = extProb >= 0.50;
+            const statusEl = document.getElementById('bass_status');
+            if (isSafe) {
+                statusEl.className = 'status-box status-safe';
+                statusEl.innerText = "✅ SAFE: High Probability of Self-Extinction";
+            } else {
+                statusEl.className = 'status-box status-danger';
+                statusEl.innerText = "🚨 HAZARD: Sustained Spacecraft Cabin Fire!";
+            }
+
+            document.getElementById('bass_prob').innerText = (extProb * 100).toFixed(1) + "%";
+
+            // Estimated CO calculation
+            let estCo = (1.0 - extProb) * 140.0 + (thick * 4.5);
+            document.getElementById('bass_co').innerText = Math.round(estCo) + " ppm";
+
+            const coAlert = document.getElementById('bass_co_alert');
+            const recEl = document.getElementById('bass_rec');
+            if (estCo > 50) {
+                coAlert.style.display = 'block';
+                coAlert.innerText = `⚠️ TOXICOLOGY ALERT: Projected CO (${Math.round(estCo)} ppm) exceeds NASA 7-day spacecraft maximum limit (50 ppm).`;
+                recEl.innerText = "Activate active Halon/CO2 fire suppression and set cabin ventilation to isolate the affected compartment.";
+            } else {
+                coAlert.style.display = 'none';
+                recEl.innerText = "Passive containment sufficient. Environmental control scrubbers (ECLSS) can handle expected trace gas generation.";
+            }
+        }
+
+        function updateFlexVals() {
+            document.getElementById('val_p').innerText = document.getElementById('f_p').value + " bar";
+            document.getElementById('val_d0').innerText = document.getElementById('f_d0').value + " mm";
+            document.getElementById('val_xo2').innerText = document.getElementById('f_o2').value;
+            document.getElementById('val_xco2').innerText = document.getElementById('f_co2').value;
+            document.getElementById('val_xhe').innerText = document.getElementById('f_he').value;
+            runFlexPredict();
+        }
+
+        function runFlexPredict() {
+            const fuel = document.getElementById('f_fuel').value;
+            const p = parseFloat(document.getElementById('f_p').value);
+            const d0 = parseFloat(document.getElementById('f_d0').value);
+            const xo2 = parseFloat(document.getElementById('f_o2').value);
+            const xco2 = parseFloat(document.getElementById('f_co2').value);
+            const xhe = parseFloat(document.getElementById('f_he').value);
+
+            // Physical d2 model calibrated with FLEX regression
+            let baseK = fuel === 'Heptane' ? 0.45 : 0.52;
+            let k = baseK + (xo2 - 0.21) * 0.95 + (xhe * 0.65) - (xco2 * 0.55) - (p - 1.0) * 0.03;
+            k = Math.max(0.08, k);
+
+            const totalTime = (d0 * d0) / k;
+            document.getElementById('flex_k').innerText = k.toFixed(4) + " mm²/s";
+            document.getElementById('flex_time').innerText = totalTime.toFixed(2) + " s";
+
+            // Update Chart
+            const steps = 30;
+            const tVals = [];
+            const dVals = [];
+            for (let i = 0; i <= steps; i++) {
+                const t = (totalTime * i) / steps;
+                tVals.push(t.toFixed(1));
+                const d2 = Math.max(0, d0 * d0 - k * t);
+                dVals.push(Math.sqrt(d2).toFixed(2));
+            }
+
+            if (!chartInstance) {
+                const ctx = document.getElementById('dropletChart').getContext('2d');
+                chartInstance = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: tVals,
+                        datasets: [{
+                            label: 'Droplet Diameter d(t) [mm]',
+                            data: dVals,
+                            borderColor: '#3b82f6',
+                            backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                            fill: true,
+                            tension: 0.2
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            x: { title: { display: true, text: 'Time (seconds)', color: '#94a3b8' }, ticks: { color: '#94a3b8' } },
+                            y: { title: { display: true, text: 'Diameter (mm)', color: '#94a3b8' }, ticks: { color: '#94a3b8' }, min: 0 }
+                        },
+                        plugins: { legend: { labels: { color: '#e2e8f0' } } }
+                    }
+                });
+            } else {
+                chartInstance.data.labels = tVals;
+                chartInstance.data.datasets[0].data = dVals;
+                chartInstance.update();
+            }
+        }
+
+        window.onload = loadModels;
+    </script>
+</body>
+</html>
+

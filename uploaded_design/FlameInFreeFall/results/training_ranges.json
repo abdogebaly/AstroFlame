@@ -1,0 +1,488 @@
+{
+ "bass": {
+  "all": {
+   "thickness_mm": [
+    0.1,
+    12.7
+   ],
+   "width_cm": [
+    1.0,
+    4.0
+   ],
+   "fan_display": [
+    0.475,
+    80122.0
+   ],
+   "air_display": [
+    0.0,
+    29.5
+   ],
+   "o2_initial": [
+    13.6,
+    22.2
+   ]
+  },
+  "cats": {
+   "material_type": [
+    "Nomex",
+    "Other",
+    "PMMA",
+    "SIBAL",
+    "Wax"
+   ],
+   "geometry": [
+    "Candle",
+    "Fabric",
+    "Film",
+    "Other",
+    "Rod",
+    "Slab",
+    "Spherical"
+   ],
+   "color": [
+    "black",
+    "clear",
+    "standard"
+   ]
+  },
+  "by_col": "material_type",
+  "by": {
+   "Nomex": {
+    "thickness_mm": [
+     6.35,
+     6.35
+    ],
+    "width_cm": [
+     2.0,
+     2.0
+    ],
+    "fan_display": [
+     61.0,
+     92.0
+    ],
+    "air_display": [
+     8.0,
+     15.0
+    ],
+    "o2_initial": [
+     21.0,
+     22.2
+    ]
+   },
+   "Other": {
+    "thickness_mm": [
+     0.2,
+     6.35
+    ],
+    "width_cm": [
+     2.0,
+     4.0
+    ],
+    "fan_display": [
+     35.2,
+     63.0
+    ],
+    "air_display": [
+     4.75,
+     10.0
+    ],
+    "o2_initial": [
+     17.2,
+     22.2
+    ]
+   },
+   "PMMA": {
+    "thickness_mm": [
+     0.1,
+     12.7
+    ],
+    "width_cm": [
+     1.0,
+     2.0
+    ],
+    "fan_display": [
+     0.475,
+     75.66
+    ],
+    "air_display": [
+     0.0,
+     29.38888888888889
+    ],
+    "o2_initial": [
+     13.6,
+     22.2
+    ]
+   },
+   "SIBAL": {
+    "thickness_mm": [
+     6.35,
+     6.35
+    ],
+    "width_cm": [
+     1.0,
+     2.0
+    ],
+    "fan_display": [
+     1.1,
+     80122.0
+    ],
+    "air_display": [
+     2.25,
+     29.5
+    ],
+    "o2_initial": [
+     16.4,
+     20.8
+    ]
+   },
+   "Wax": {
+    "thickness_mm": [
+     6.35,
+     6.35
+    ],
+    "width_cm": [
+     2.0,
+     2.0
+    ],
+    "air_display": [
+     3.0,
+     3.0
+    ],
+    "o2_initial": [
+     17.4,
+     17.4
+    ]
+   }
+  }
+ },
+ "flex": {
+  "all": {
+   "pressure_bar": [
+    0.0,
+    3.0929370780000003
+   ],
+   "x_o2": [
+    0.12,
+    0.34
+   ],
+   "x_n2": [
+    0.09,
+    0.88
+   ],
+   "x_co2": [
+    0.0,
+    0.7
+   ],
+   "x_he": [
+    0.0,
+    0.45
+   ],
+   "d0_mm": [
+    1.1,
+    4.67
+   ]
+  },
+  "cats": {
+   "fuel": [
+    "Heptane",
+    "Methanol"
+   ]
+  },
+  "by_col": "fuel",
+  "by": {
+   "Heptane": {
+    "pressure_bar": [
+     0.70394016,
+     3.0929370780000003
+    ],
+    "x_o2": [
+     0.13,
+     0.34
+    ],
+    "x_n2": [
+     0.09,
+     0.86
+    ],
+    "x_co2": [
+     0.0,
+     0.7
+    ],
+    "x_he": [
+     0.0,
+     0.45
+    ],
+    "d0_mm": [
+     1.1,
+     4.67
+    ]
+   },
+   "Methanol": {
+    "pressure_bar": [
+     0.0,
+     3.0926704339999995
+    ],
+    "x_o2": [
+     0.12,
+     0.34
+    ],
+    "x_n2": [
+     0.09,
+     0.88
+    ],
+    "x_co2": [
+     0.0,
+     0.7
+    ],
+    "x_he": [
+     0.0,
+     0.45
+    ],
+    "d0_mm": [
+     1.61,
+     4.53
+    ]
+   }
+  }
+ },
+ "cfig": {
+  "all": {
+   "pressure_bar": [
+    0.50665,
+    3.0399
+   ],
+   "xf": [
+    0.0,
+    1.0
+   ],
+   "xo2_initial": [
+    0.179685675,
+    0.3997
+   ],
+   "mhc_mg_s": [
+    0.0,
+    3.215
+   ]
+  },
+  "cats": {
+   "fuel": [
+    "30% butane",
+    "30% ethane",
+    "30% propane",
+    "50% butane",
+    "ethane",
+    "propane"
+   ],
+   "hot_ignition": [
+    "No",
+    "Yes"
+   ]
+  },
+  "by_col": "fuel",
+  "by": {
+   "30% butane": {
+    "pressure_bar": [
+     0.50665,
+     2.0266
+    ],
+    "xf": [
+     0.0,
+     0.3
+    ],
+    "xo2_initial": [
+     0.211044619,
+     0.3993
+    ],
+    "mhc_mg_s": [
+     0.0,
+     3.215
+    ]
+   },
+   "30% ethane": {
+    "pressure_bar": [
+     0.50665,
+     2.0266
+    ],
+    "xf": [
+     0.3,
+     0.3
+    ],
+    "xo2_initial": [
+     0.207221235,
+     0.3997
+    ],
+    "mhc_mg_s": [
+     0.5,
+     2.36
+    ]
+   },
+   "30% propane": {
+    "pressure_bar": [
+     1.0133,
+     3.0399
+    ],
+    "xf": [
+     0.04742,
+     0.3
+    ],
+    "xo2_initial": [
+     0.208927834,
+     0.3996
+    ],
+    "mhc_mg_s": [
+     0.125,
+     2.89
+    ]
+   },
+   "50% butane": {
+    "pressure_bar": [
+     0.50665,
+     1.0133
+    ],
+    "xf": [
+     0.125,
+     0.5
+    ],
+    "xo2_initial": [
+     0.207473561,
+     0.3957
+    ],
+    "mhc_mg_s": [
+     0.5,
+     1.6
+    ]
+   },
+   "ethane": {
+    "pressure_bar": [
+     0.9443956,
+     1.0133
+    ],
+    "xf": [
+     0.25,
+     1.0
+    ],
+    "xo2_initial": [
+     0.179685675,
+     0.3939
+    ],
+    "mhc_mg_s": [
+     0.5,
+     2.0
+    ]
+   },
+   "propane": {
+    "pressure_bar": [
+     0.9443956,
+     1.0133
+    ],
+    "xf": [
+     1.0,
+     1.0
+    ],
+    "xo2_initial": [
+     0.211402567,
+     0.3954
+    ],
+    "mhc_mg_s": [
+     0.4,
+     2.0
+    ]
+   }
+  }
+ },
+ "spice": {
+  "all": {
+   "nozzle_mm": [
+    0.4064,
+    1.6002
+   ],
+   "air_rate_cm_s": [
+    -5.92,
+    85.28
+   ]
+  },
+  "cats": {
+   "fuel": [
+    "50 % Propylene",
+    "75 % Propylene",
+    "75% Propylene",
+    "Ethylene",
+    "Methane",
+    "Propane",
+    "Propylene"
+   ]
+  },
+  "by_col": "fuel",
+  "by": {
+   "50 % Propylene": {
+    "nozzle_mm": [
+     0.4064,
+     1.6002
+    ],
+    "air_rate_cm_s": [
+     -5.92,
+     66.48
+    ]
+   },
+   "75 % Propylene": {
+    "nozzle_mm": [
+     0.4064,
+     1.6002
+    ],
+    "air_rate_cm_s": [
+     -0.28,
+     85.28
+    ]
+   },
+   "75% Propylene": {
+    "nozzle_mm": [
+     0.4064,
+     1.6002
+    ],
+    "air_rate_cm_s": [
+     11.95,
+     66.48
+    ]
+   },
+   "Ethylene": {
+    "nozzle_mm": [
+     0.4064,
+     1.6002
+    ],
+    "air_rate_cm_s": [
+     15.71,
+     58.96
+    ]
+   },
+   "Methane": {
+    "nozzle_mm": [
+     0.4064,
+     0.762
+    ],
+    "air_rate_cm_s": [
+     27.93,
+     55.2
+    ]
+   },
+   "Propane": {
+    "nozzle_mm": [
+     0.4064,
+     1.6002
+    ],
+    "air_rate_cm_s": [
+     14.77,
+     66.48
+    ]
+   },
+   "Propylene": {
+    "nozzle_mm": [
+     0.4064,
+     1.6002
+    ],
+    "air_rate_cm_s": [
+     4.42,
+     58.02
+    ]
+   }
+  }
+ }
+}

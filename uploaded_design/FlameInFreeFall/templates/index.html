@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AstroFlame | Predicting Fire in Zero Gravity</title>
+<link rel="stylesheet" href="/static/css/style.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+<div class="nebula"></div>
+<canvas id="starfield"></canvas>
+
+<header class="nav">
+  <a class="brand" href="#top"><span class="brand-dot"></span>ASTRO<b>FLAME</b></a>
+  <nav><a href="#why">Why it matters</a><a href="#console">Mission console</a><a href="#credits">Credits</a></nav>
+  <span class="pill"><i></i>ENGINE ONLINE</span>
+</header>
+
+<main id="top">
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-copy">
+    <p class="eyebrow">NASA PSI &middot; ISS &amp; DROP-TOWER DATA</p>
+    <h1>Fire doesn't rise in space.<br><em>It floats.</em></h1>
+    <p class="lead">Without gravity, flames turn into silent glowing spheres, and a fire aboard a spacecraft can't be outrun. AstroFlame learns from real NASA microgravity experiments to estimate whether a fire will <strong>survive or starve</strong> &mdash; and tells you how far to trust every estimate.</p>
+    <div class="cta"><a class="btn" href="#console">Enter mission console</a><a class="btn ghost" href="#why">Why this matters</a></div>
+    <div class="stats">
+      <div><b data-count="1205">0</b><span>real experimental runs</span></div>
+      <div><b data-count="5">0</b><span>NASA PSI experiments</span></div>
+      <div><b data-count="7">0</b><span>AI prediction models</span></div>
+      <div><b>0 g</b><span>buoyancy in orbit</span></div>
+    </div>
+  </div>
+  <svg class="orrery" viewBox="0 0 520 520" aria-hidden="true">
+    <defs><radialGradient id="core"><stop offset="0" stop-color="#fff6d8"/><stop offset=".3" stop-color="#ffb454"/><stop offset=".7" stop-color="#ff5a36" stop-opacity=".45"/><stop offset="1" stop-color="#ff5a36" stop-opacity="0"/></radialGradient></defs>
+    <circle cx="260" cy="260" r="250" fill="url(#core)" opacity=".25" class="breathe"/>
+    <g fill="none" stroke="rgba(170,180,255,.25)"><circle cx="260" cy="260" r="120"/><circle cx="260" cy="260" r="170" stroke-dasharray="2 9"/><circle cx="260" cy="260" r="228"/></g>
+    <circle cx="260" cy="260" r="64" fill="url(#core)" class="breathe"/><circle cx="260" cy="260" r="9" fill="#fff"/>
+    <g class="spin s1"><g transform="translate(380 260)"><rect x="-9" y="-1.5" width="18" height="3" fill="#7cc8ff"/><rect x="-2" y="-7" width="4" height="14" fill="#cfe9ff"/></g></g>
+    <g class="spin s2"><circle cx="260" cy="90" r="4" fill="#6ef3c5"/></g>
+    <g class="spin s3"><circle cx="488" cy="260" r="3" fill="#ffb454"/></g>
+    <text x="392" y="250" class="svg-lbl">ISS &middot; 408 km</text>
+    <text x="260" y="352" class="svg-lbl" text-anchor="middle">SPHERICAL FLAME &middot; g&#8776;0</text>
+  </svg>
+</section>
+
+<!-- WHY IT MATTERS -->
+<section id="why" class="section">
+  <p class="eyebrow">THE MISSION</p>
+  <h2>Predict the fire <em>before</em> it ignites.</h2>
+  <div class="why">
+    <article class="panel"><span class="num">01</span><h3>No up, no down</h3><p>Buoyancy vanishes. Hot gas stops rising, so flames wrap into spheres fed only by slow molecular diffusion &mdash; behaving nothing like fire on Earth.</p></article>
+    <article class="panel"><span class="num">02</span><h3>No way out</h3><p>A spacecraft is a sealed lifeboat. The crew can't evacuate or wait for help, and cabin airflow can either feed a fire or blow it out. Prevention is the only defense.</p></article>
+    <article class="panel"><span class="num">03</span><h3>No room for guesswork</h3><p>Every ISS experiment is rare and costly. Our models learn from 1,205 real runs to estimate outcomes for untested settings &mdash; and flags every estimate that leaves the data. A research aid for future Moon and Mars missions.</p></article>
+  </div>
+</section>
+
+<!-- CONSOLE -->
+<section id="console" class="section">
+  <p class="eyebrow">MISSION CONSOLE</p>
+  <h2>Choose a station. <em>Run the physics.</em></h2>
+  <p class="disclaimer">Research &amp; education tool trained on a small set of NASA PSI experiments. It is <b>not</b> a certified safety or compliance system. Every result shows its confidence level, and warns when inputs leave the tested range.</p>
+  <nav class="tabs">
+    <button class="tab active" data-tab="bass"><i>01</i>Solid fire safety<small>BASS-II</small></button>
+    <button class="tab" data-tab="flex"><i>02</i>Droplet physics<small>FLEX</small></button>
+    <button class="tab" data-tab="cfig"><i>03</i>Gaseous flames<small>CFI-G</small></button>
+    <button class="tab" data-tab="spice"><i>04</i>Soot &amp; smoke<small>SPICE</small></button>
+    <button class="tab" data-tab="benchmark"><i>05</i>Verification<small>ACCURACY</small></button>
+  </nav>
+
+  <div id="pane-bass" class="pane active"><div class="grid">
+    <div class="panel"><h4>Cabin &amp; material</h4><div class="controls" id="ctl-bass"></div></div>
+    <div class="panel"><h4>AI flight-safety assessment</h4>
+      <div class="viewport"><canvas id="flameCanvas"></canvas><div class="vp-cap" id="flame_status_text">SPHERICAL FLAME ENGINE</div></div>
+      <div id="bass_banner" class="banner mid">Analyzing compartment safety&hellip;</div>
+      <div class="read"><div><small>Extinction probability</small><b id="bass_ext_prob" class="c-blue">--%</b></div><div><small>Toxic CO (indicative)</small><b id="bass_co_ppm" class="c-amber">-- ppm</b></div><div class="wide"><small>Non-extinction risk (100 &minus; P)</small><b id="bass_hazard_idx">--</b></div></div><div class="warn" id="warn-bass"></div><p class="quality" id="q-bass"></p>
+    </div>
+  </div></div>
+
+  <div id="pane-flex" class="pane"><div class="grid">
+    <div class="panel"><h4>Droplet &amp; atmosphere</h4><div class="controls" id="ctl-flex"></div></div>
+    <div class="panel"><h4>d&sup2;-law decay</h4>
+      <div class="read"><div><small>Burning rate K</small><b id="flex_k_val" class="c-blue">-- mm&sup2;/s</b></div><div><small>Total lifetime</small><b id="flex_burn_time" class="c-mint">-- s</b></div><div class="wide"><small>Projected end mode</small><b id="flex_term_mode" class="c-amber">--</b></div></div>
+      <div class="chart-box"><canvas id="flexChart"></canvas></div><div class="warn" id="warn-flex"></div><p class="quality" id="q-flex"></p>
+    </div>
+  </div></div>
+
+  <div id="pane-cfig" class="pane"><div class="grid">
+    <div class="panel"><h4>Co-flow burner inputs</h4><div class="controls" id="ctl-cfig"></div></div>
+    <div class="panel"><h4>Gaseous extinction projection</h4>
+      <div class="read"><div><small>Flame duration</small><b id="cfig_time_val" class="c-blue">-- s</b></div><div><small>Self-extinction probability</small><b id="cfig_ext_prob" class="c-mint">--%</b></div></div>
+      <div class="banner safe">Microgravity removes buoyant acceleration, so low-strain diffusion flames can starve and self-extinguish.</div><div class="warn" id="warn-cfig"></div><p class="quality" id="q-cfig"></p>
+    </div>
+  </div></div>
+
+  <div id="pane-spice" class="pane"><div class="grid">
+    <div class="panel"><h4>Soot initiation</h4><div class="controls" id="ctl-spice"></div></div>
+    <div class="panel"><h4>Critical smoke-point dynamics</h4>
+      <div class="read"><div class="wide"><small>Critical fuel flow at smoke point</small><b id="spice_flow_val" class="c-amber">-- mg/s</b></div></div>
+      <div class="banner safe">With no buoyant flow, fuel stays in the flame longer, soot builds up faster and the smoke-point threshold shifts.</div><div class="warn" id="warn-spice"></div><p class="quality" id="q-spice"></p>
+    </div>
+  </div></div>
+
+  <div id="pane-benchmark" class="pane"><div class="panel">
+    <h4>Model verification &middot; held-out experimental settings</h4>
+    <div class="gauges" id="gauges"></div>
+    <div class="tbl-wrap"><table id="valtbl"></table></div>
+    <p class="note"><b>Random split</b> lets repeated runs of the same setting appear in both training and test data (optimistic). <b>Unseen settings</b> holds out whole experimental settings &mdash; the honest test. Baseline = naive guess (majority class, or the median).</p>
+  </div></div>
+</section>
+</main>
+
+<footer id="credits" class="foot">
+  <p><b>AstroFlame</b> &middot; Data from the NASA Physical Sciences Informatics (PSI) system.</p>
+  <p>BASS-II: S. Bhattacharjee, S. Olson, J. T'ien &middot; FLEX: F. A. Williams &middot; SPICE &amp; CFI-G: NASA Glenn Research Center.</p>
+</footer>
+<script src="/static/js/app.js"></script>
+</body>
+</html>

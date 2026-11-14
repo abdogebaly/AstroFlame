@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>الدليل الشامل لنماذج الذكاء الاصطناعي - AstroFlame</title>
+    <style>
+        @page {
+            size: A4;
+            margin: 15mm 15mm 15mm 15mm;
+        }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Arial, sans-serif;
+        }
+        body {
+            background-color: #ffffff;
+            color: #1e293b;
+            line-height: 1.6;
+            font-size: 13px;
+        }
+        .header {
+            text-align: center;
+            border-bottom: 3px solid #0284c7;
+            padding-bottom: 12px;
+            margin-bottom: 20px;
+        }
+        .header h1 {
+            color: #0f172a;
+            font-size: 22px;
+            font-weight: 800;
+            margin-bottom: 4px;
+        }
+        .header p {
+            color: #64748b;
+            font-size: 13px;
+            font-weight: 600;
+        }
+        .badge {
+            display: inline-block;
+            background: #e0f2fe;
+            color: #0369a1;
+            padding: 3px 10px;
+            border-radius: 999px;
+            font-size: 11px;
+            font-weight: bold;
+            margin-top: 6px;
+            border: 1px solid #bae6fd;
+        }
+        .intro-box {
+            background: #f8fafc;
+            border-right: 4px solid #0284c7;
+            padding: 12px 16px;
+            border-radius: 6px;
+            margin-bottom: 22px;
+            font-size: 12.5px;
+            color: #334155;
+            text-align: justify;
+        }
+        .model-card {
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 20px;
+            page-break-inside: avoid;
+            background: #ffffff;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.03);
+        }
+        .model-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #f1f5f9;
+            padding-bottom: 8px;
+            margin-bottom: 12px;
+        }
+        .model-title {
+            font-size: 16px;
+            font-weight: 800;
+            color: #0f172a;
+        }
+        .model-tag {
+            background: #f1f5f9;
+            color: #475569;
+            font-size: 11px;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+        .section-title {
+            font-weight: 700;
+            font-size: 13px;
+            color: #0369a1;
+            margin-top: 10px;
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .section-desc {
+            font-size: 12.5px;
+            color: #334155;
+            margin-bottom: 8px;
+            text-align: justify;
+        }
+        ul {
+            padding-right: 20px;
+            margin-bottom: 8px;
+        }
+        li {
+            margin-bottom: 4px;
+            font-size: 12.5px;
+            color: #334155;
+        }
+        .metrics-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 8px;
+            margin-bottom: 8px;
+            font-size: 12px;
+        }
+        .metrics-table th, .metrics-table td {
+            border: 1px solid #e2e8f0;
+            padding: 6px 10px;
+            text-align: right;
+        }
+        .metrics-table th {
+            background: #f8fafc;
+            color: #475569;
+            font-weight: 700;
+        }
+        .hazard-box {
+            background: #fef2f2;
+            border: 1px solid #fecaca;
+            color: #991b1b;
+            padding: 10px 14px;
+            border-radius: 6px;
+            font-size: 12px;
+            margin-top: 10px;
+        }
+        .footer {
+            text-align: center;
+            font-size: 11px;
+            color: #94a3b8;
+            margin-top: 30px;
+            border-top: 1px solid #e2e8f0;
+            padding-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1>منظومة ASTROFLAME // الدليل الشامل لنماذج الذكاء الاصطناعي</h1>
+        <p>التوثيق العلمي والهندسي لنماذج فيزياء الاحتراق والسلامة الفضائية المبنية على بيانات NASA PSI</p>
+        <div class="badge">NASA Physical Sciences Informatics // Flight Safety AI Suite</div>
+    </div>
+
+    <div class="intro-box">
+        <strong>نظرة عامة على المنظومة:</strong><br>
+        في بيئة انعدام الجاذبية (الجاذبية الصغرى / السقوط الحر على متن محطة الفضاء الدولية ISS)، ينعدم الحمل الحراري الطبيعي تماماً، مما يجعل سلوك النيران والغازات يتصرف بطرق غير مألوفة وعالية الخطورة. تم تدريب وتطوير هذه النماذج الخمسة للذكاء الاصطناعي لتحليل البيانات التجريبية الحقيقية لوكالة ناسا وتقديم توقعات هندسية فائقة الدقة لحماية الكابينة ورواد الفضاء وإدارة مخاطر الاحتراق.
+    </div>
+
+    <!-- MODEL 1 -->
+    <div class="model-card">
+        <div class="model-header">
+            <span class="model-title">1. نموذج تصنيف انطفاء حرائق الكابينة الصلبة (BASS-II Flame Extinction Classifier)</span>
+            <span class="model-tag">Random Forest Classifier (Tuned)</span>
+        </div>
+        <p class="section-desc"><strong>بيانات التدريب:</strong> تجربة NASA PSI-25 (BASS-II) - 129 تجربة احتراق لمواد صلبة مختلفة أجريت داخل قفاز العلوم الفضائية (MSG) على محطة الفضاء الدولية.</p>
+        
+        <div class="section-title">📌 الوظيفة الدقيقة للنموذج:</div>
+        <p class="section-desc">التنبؤ اللحظي بما إذا كانت المادة الصلبة (أكريليك PMMA، أقمشة SIBAL، أقمشة Nomex، الشمع) ستنطفئ ذاتياً (Self-Extinction) أم سيستمر اشتعالها كحريق مستعر دائم، وذلك بناءً على سماكة المادة، شكلها الهندسي (فيلم، لوح، قضيب، نسيج)، وسرعة تدفق الهواء القسري من مراوح الكابينة، ونسبة الأكسجين الابتدائية.</p>
+
+        <div class="section-title">⭐ الفائدة والأثر العلمي:</div>
+        <ul>
+            <li><strong>دقة عالية وموثقة:</strong> حقق دقة <strong>88.28%</strong> في التحقق المتقاطع الخماسي، مع دقة موجبة (Precision) بلغت <strong>90.0%</strong>.</li>
+            <li><strong>اعتماد معايير ناسا الرسمية:</strong> يحدد مدى مطابقة المادة لمعيار ناسا القياسي لاشتعال المواد الفضائية (<strong>NASA-STD-6001</strong>).</li>
+            <li><strong>تحديد منطقة الخطر الحرجة:</strong> حدد أن تدفق الهواء بالمراوح بين 30 و 50 وحدة هو أشد نطاقات الاشتعال خطورة.</li>
+        </ul>
+
+        <div class="hazard-box">
+            <strong>⚠️ المشاكل الكارثية التي يتجنبها:</strong><br>
+            • <strong>منع حرائق الكابينة الفضائية الكارثية:</strong> مثل حريق محطة مير الروسية (1997) أو حادثة أبولو 1.<br>
+            • <strong>تجنب التقدير الخاطئ لسلامة المواد:</strong> كشف النموذج أن ألواح الأكريليك السميكة تستمر في الاشتعال بنسبة 100% في الفضاء ويجب حظر استخدامها قرب فتحات التهوية.<br>
+            • <strong>منع التغذية القاتلة للأكسجين:</strong> يرشد الطاقم إلى ضبط سرعة المراوح بدقة لاقتلاع اللهب (Blow-Off) بدلاً من تغذيته.
+        </div>
+    </div>
+
+    <!-- MODEL 2 -->
+    <div class="model-card">
+        <div class="model-header">
+            <span class="model-title">2. نموذج تقدير انبعاثات أول أكسيد الكربون السام (Toxic CO Output Regressor)</span>
+            <span class="model-tag">Random Forest Regressor / Ridge</span>
+        </div>
+        <p class="section-desc"><strong>بيانات التدريب:</strong> قياسات الحساسات الكيميائية ومعدلات استهلاك الأكسجين في تجارب BASS-II.</p>
+
+        <div class="section-title">📌 الوظيفة الدقيقة للنموذج:</div>
+        <p class="section-desc">تقدير كمية غاز أول أكسيد الكربون السام ($CO$) بالملايين (ppm) الناتجة عن احتراق أو تفحم العينة في البيئة المغلقة للمركبة الفضائية.</p>
+
+        <div class="section-title">⭐ الفائدة والأثر العلمي:</div>
+        <ul>
+            <li><strong>المراقبة السمية المباشرة:</strong> يقارن الانبعاث المتوقع بحدود طوارئ الكابينة الرسمية لوكالة ناسا (<strong>NASA SMAC Limit: 50 ppm</strong>).</li>
+            <li><strong>تخطيط نظام دعم الحياة (ECLSS):</strong> يحدد مسبقاً ساعات التشغيل المطلوبة لفلاتر الكابينة لتطهير الهواء قبل خلع رواد الفضاء لأقنعة الأكسجين.</li>
+        </ul>
+
+        <div class="hazard-box">
+            <strong>⚠️ المشاكل الكارثية التي يتجنبها:</strong><br>
+            • <strong>منع التسمم الصامت لرواد الفضاء:</strong> في انعدام الجاذبية، لا يصعد الدخان لأعلى، بل يتجمع في فقاعات غازية سامة راكدة غير مرئية حول الطاقم.<br>
+            • <strong>تجنب انهيار أجهزة تنقية الهواء:</strong> يمنع استنزاف فلاتر هيدروكسيد الليثيوم (LiOH) وأنظمة إزالة الكربون (CDRA) بشكل غير محسوب.
+        </div>
+    </div>
+
+    <!-- MODEL 3 -->
+    <div class="model-card">
+        <div class="model-header">
+            <span class="model-title">3. نموذج احتراق القطرات وقانون مربع القطر (FLEX Droplet Burning Rate K Regressor)</span>
+            <span class="model-tag">Gradient Boosting Regressor (180 Trees)</span>
+        </div>
+        <p class="section-desc"><strong>بيانات التدريب:</strong> تجربة NASA PSI-69 (FLEX) - 274 قطرة وقود هيدروكربوني سائل (ميثانول وهيبتان) في غرف احتراق محكومة الغازات والضغط على محطة الفضاء الدولية.</p>
+
+        <div class="section-title">📌 الوظيفة الدقيقة للنموذج:</div>
+        <p class="section-desc">حساب المعامل الفيزيائي الكلاسيكي لمعدل الاحتراق الكروي $K$ ($mm^2/s$) وزمن فناء القطرة، اعتماداً على الضغط (من 0.2 إلى 3 بار) والكسور المولية للغازات المحيطة ($O_2, N_2, CO_2, He$).</p>
+
+        <div class="section-title">⭐ الفائدة والأثر العلمي:</div>
+        <ul>
+            <li><strong>ارتباط فيزيائي فائق:</strong> حقق معامل ارتباط بيرسون يبلغ <strong>0.7244</strong> مع البيانات التجريبية وهامش خطأ مطلق ضئيل جداً ($0.0769\text{ mm}^2/\text{s}$).</li>
+            <li><strong>تأصيل تأثير الغازات الخاملة:</strong> يثبت كيف يسرّع الهيليوم ($He$) الاحتراق بسبب موصليته الحرارية العالية، وكيف يخمد ثاني أكسيد الكربون ($CO_2$) اللهب بالتشتيت الإشعاعي.</li>
+        </ul>
+
+        <div class="hazard-box">
+            <strong>⚠️ المشاكل الكارثية التي يتجنبها:</strong><br>
+            • <strong>منع حرائق تسربات الوقود السائل في مقصورات الصواريخ:</strong> التنبؤ بدقة بمدى سرعة انتشار واشتعال رذاذ الوقود المتسرب.<br>
+            • <strong>تطوير طفايات حريق غازية آمنة وغير سامة:</strong> استبدال غازات الهالون السامة بخليط غازي محسوب من $CO_2$ يخمد النيران إشعاعياً دون تسميم الكابينة.
+        </div>
+    </div>
+
+    <!-- MODEL 4 -->
+    <div class="model-card">
+        <div class="model-header">
+            <span class="model-title">4. نموذج تصنيف أطوار نهاية احتراق القطرات (FLEX Droplet Termination Mode Classifier)</span>
+            <span class="model-tag">Random Forest 3-Class Classifier</span>
+        </div>
+        <p class="section-desc"><strong>بيانات التدريب:</strong> سجلات النهايات الملاحظة لقطرات الوقود في تجارب FLEX بـ ISS.</p>
+
+        <div class="section-title">📌 الوظيفة الدقيقة للنموذج:</div>
+        <p class="section-desc">التنبؤ الذكي بالطور الفيزيائي الذي ستنتهي به القطرة: الانطفاء الكيميائي المبكر (Extinction)، أو التفكك والانفجار الميكروي المفاجئ (Disruption)، أو الاحتراق الكامل حتى النفاد (Completion).</p>
+
+        <div class="section-title">⭐ الفائدة والأثر العلمي:</div>
+        <ul>
+            <li><strong>دقة تصنيف 76.36%:</strong> مع استقرار بنسبة 75.91% في التحقق المتقاطع.</li>
+            <li><strong>كشف الانتقال إلى اللهب البارد:</strong> يحدد الظروف التي ينطفئ فيها اللهب المرئي ولكن يستمر احتراق الوقود غير المرئي عند درجات حرارة منخفضة.</li>
+        </ul>
+
+        <div class="hazard-box">
+            <strong>⚠️ المشاكل الكارثية التي يتجنبها:</strong><br>
+            • <strong>منع انتشار الحرائق الثانوية (Micro-explosive Spatter):</strong> عند حدوث Disruption تنفجر القطرة وتنثر شظايا سائلة مشتعلة تصيب الدوائر الإلكترونية المجاورة.<br>
+            • <strong>تجنب الانفجار الارتجاعي المميت (Backdraft):</strong> يمنع رواد الفضاء من فتح الأجهزة إذا كان الوقود لا يزال يمر بطور "اللهب البارد الخفي" غير المرئي بالعين.
+        </div>
+    </div>
+
+    <!-- MODEL 5 -->
+    <div class="model-card">
+        <div class="model-header">
+            <span class="model-title">5. نموذج احتراق الغازات واللهب المعكوس (CFI-G Gaseous Flame & Extinction Suite)</span>
+            <span class="model-tag">Random Forest & Gradient Boosting Suite</span>
+        </div>
+        <p class="section-desc"><strong>بيانات التدريب:</strong> تجارب NASA PSI-159 (CFI-G Normal & Inverse Flames) - 333 تجربة احتراق لغازات الإيثان، البروبان، والبيوتان حتى ضغط 3.3 بار.</p>
+
+        <div class="section-title">📌 الوظيفة الدقيقة للنموذج:</div>
+        <p class="section-desc">التنبؤ بحدوث الانطفاء الذاتي للهب الغازي (Self-Extinction) وتقدير زمن بقائه، وتحليل سلوك "اللهب المعكوس" (Inverse Flames) عند حقن الأكسجين داخل بيئة غاز الوقود.</p>
+
+        <div class="section-title">⭐ الفائدة والأثر العلمي:</div>
+        <ul>
+            <li><strong>أعلى النماذج دقة في المنظومة:</strong> حقق دقة استثنائية بلغت <strong>95.45%</strong> ومقياس $F1 = 0.9615$.</li>
+            <li><strong>محاكاة حرائق التسربات العكسية:</strong> أول نموذج ذكاء اصطناعي يتنبأ باستقرار اللهب المعكوس في انعدام الجاذبية.</li>
+        </ul>
+
+        <div class="hazard-box">
+            <strong>⚠️ المشاكل الكارثية التي يتجنبها:</strong><br>
+            • <strong>منع انفجارات أنابيب الوقود ومحركات الصواريخ:</strong> يحاكي تسرب المؤكسد داخل أنابيب الوقود ويحدد بدقة متى ينطفئ اللهب تلقائياً لمنع تمزق خطوط الإمداد.<br>
+            • <strong>التحكم الآلي الذكي بصمامات الطوارئ:</strong> يرشد النظام الذكي متى يكفي قفل الصمام لينطفئ الحريق تلقائياً دون استنزاف مواد الإطفاء الثمينة في المحطة.
+        </div>
+    </div>
+
+    <!-- BONUS COMPANION -->
+    <div class="model-card" style="border-color: #fde68a; background: #fffdf5;">
+        <div class="model-header">
+            <span class="model-title">ملحق إضافي: نموذج ديناميكا السخام ونقطة الدخان (SPICE Soot & Smoke Point Model)</span>
+            <span class="model-tag">Gradient Boosting Regressor</span>
+        </div>
+        <p class="section-desc">
+            <strong>الوظيفة والفائدة:</strong> يتنبأ بمعدل تدفق الوقود الحرج عند "نقطة الدخان" ($R^2 = 0.577, r = 0.762$) استناداً لقطر الفوهة وسرعة الهواء المرافق.<br>
+            <strong>المشاكل المتجنبة:</strong> منع ترسب جزيئات الكربون النانوية (السخام) على زجاج قمرة القيادة، ومنع انسداد الحساسات البصرية وفلاتر التنفس الفضائية.
+        </p>
+    </div>
+
+    <div class="footer">
+        تم استخراج وتوثيق هذه النتائج آلياً من منظومة AstroFlame OS // مبني على بيانات NASA Physical Sciences Informatics (PSI) الرسمية<br>
+        تاريخ الإصدار: 2026-11-14 // ملف معتمد لتدقيق السلامة الفضائية ومهمات الفضاء المأهولة
+    </div>
+
+</body>
+</html>

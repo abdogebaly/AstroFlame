@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AstroCommander AI // NASA Space Fire Safety Chatbot</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <style>
+        .nav-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 14px 24px;
+            background: rgba(10, 15, 30, 0.85);
+            border-bottom: 1px solid rgba(0, 240, 255, 0.2);
+            backdrop-filter: blur(12px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .nav-links {
+            display: flex;
+            gap: 16px;
+        }
+        .nav-btn {
+            background: rgba(15, 23, 42, 0.7);
+            border: 1px solid rgba(0, 240, 255, 0.3);
+            color: #94a3b8;
+            padding: 8px 18px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 600;
+            font-size: 14px;
+            transition: all 0.25s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .nav-btn:hover, .nav-btn.active {
+            color: #00f0ff;
+            border-color: #00f0ff;
+            background: rgba(0, 240, 255, 0.12);
+            box-shadow: 0 0 15px rgba(0, 240, 255, 0.25);
+        }
+        .chat-layout {
+            max-width: 1000px;
+            margin: 24px auto;
+            padding: 0 16px;
+            display: flex;
+            flex-direction: column;
+            height: calc(100vh - 120px);
+        }
+        .chat-box {
+            flex: 1;
+            background: rgba(15, 23, 42, 0.75);
+            border: 1px solid rgba(0, 240, 255, 0.2);
+            border-radius: 14px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+        }
+        .chat-messages {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+        .message-row {
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+            max-width: 85%;
+        }
+        .message-row.user {
+            align-self: flex-start;
+            flex-direction: row-reverse;
+        }
+        .message-row.bot {
+            align-self: flex-end;
+            flex-direction: row;
+        }
+        .msg-avatar {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            flex-shrink: 0;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .user .msg-avatar {
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+            box-shadow: 0 0 10px rgba(59, 130, 246, 0.4);
+        }
+        .bot .msg-avatar {
+            background: linear-gradient(135deg, #00f0ff, #00ffaa);
+            box-shadow: 0 0 12px rgba(0, 240, 255, 0.4);
+        }
+        .msg-bubble {
+            padding: 14px 18px;
+            border-radius: 12px;
+            font-size: 14px;
+            line-height: 1.6;
+            color: #f1f5f9;
+        }
+        .user .msg-bubble {
+            background: rgba(59, 130, 246, 0.2);
+            border: 1px solid rgba(59, 130, 246, 0.4);
+            border-top-left-radius: 2px;
+        }
+        .bot .msg-bubble {
+            background: rgba(15, 23, 42, 0.9);
+            border: 1px solid rgba(0, 240, 255, 0.3);
+            border-top-right-radius: 2px;
+        }
+        .source-pill {
+            display: inline-block;
+            font-size: 11px;
+            font-family: 'Rajdhani', sans-serif;
+            color: #00ffaa;
+            background: rgba(0, 255, 170, 0.1);
+            border: 1px solid rgba(0, 255, 170, 0.25);
+            padding: 2px 8px;
+            border-radius: 4px;
+            margin-top: 8px;
+        }
+        .quick-prompts {
+            display: flex;
+            gap: 8px;
+            padding: 12px 20px;
+            background: rgba(10, 15, 30, 0.6);
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            overflow-x: auto;
+            white-space: nowrap;
+        }
+        .prompt-chip {
+            background: rgba(30, 41, 59, 0.8);
+            border: 1px solid rgba(0, 240, 255, 0.25);
+            color: #cbd5e1;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .prompt-chip:hover {
+            border-color: #00f0ff;
+            color: #00f0ff;
+            background: rgba(0, 240, 255, 0.1);
+        }
+        .chat-input-bar {
+            display: flex;
+            gap: 12px;
+            padding: 14px 20px;
+            background: rgba(15, 23, 42, 0.95);
+            border-top: 1px solid rgba(0, 240, 255, 0.2);
+        }
+        .chat-input {
+            flex: 1;
+            background: rgba(30, 41, 59, 0.7);
+            border: 1px solid rgba(0, 240, 255, 0.3);
+            color: #fff;
+            padding: 12px 16px;
+            border-radius: 8px;
+            font-size: 14px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        .chat-input:focus {
+            border-color: #00f0ff;
+            box-shadow: 0 0 10px rgba(0, 240, 255, 0.3);
+        }
+        .chat-send-btn {
+            background: linear-gradient(135deg, #00f0ff, #00b4d8);
+            color: #050b14;
+            border: none;
+            padding: 0 24px;
+            border-radius: 8px;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.25s ease;
+        }
+        .chat-send-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 0 15px rgba(0, 240, 255, 0.5);
+        }
+    </style>
+</head>
+<body>
+    <canvas id="starfield"></canvas>
+
+    <!-- Navigation Header -->
+    <header class="nav-header">
+        <div style="display: flex; align-items: center; gap: 12px;">
+            <span style="font-size: 24px;">🤖</span>
+            <div>
+                <h2 style="font-family: 'Orbitron'; font-size: 16px; color: #00f0ff; margin: 0;">ASTROCOMMANDER AI FLIGHT ASSISTANT</h2>
+                <span style="font-size: 11px; color: #94a3b8;">NASA Space Fire Safety & Microgravity Combustion Knowledge Engine</span>
+            </div>
+        </div>
+        <div class="nav-links">
+            <a href="/" class="nav-btn">🛡️ FLIGHT DECK (لوحة القيادة)</a>
+            <a href="/chat" class="nav-btn active">🤖 AI CHATBOT (المساعد الذكي)</a>
+        </div>
+    </header>
+
+    <!-- Main Chat Layout -->
+    <div class="chat-layout">
+        <div class="chat-box">
+            <div class="chat-messages" id="chat_messages">
+                <!-- Welcome Bot Message -->
+                <div class="message-row bot">
+                    <div class="msg-avatar">🚀</div>
+                    <div class="msg-bubble">
+                        <strong>مرحباً بك أيها الرائد في نظام AstroCommander AI!</strong><br><br>
+                        أنا مساعدك الذكي المتخصص في علوم احتراق الفضاء والسلامة من الحرائق في بيئة انعدام الجاذبية.<br>
+                        أبني إجاباتي ومعرفتي العلمية مباشرة من سجلات وتجارب <strong>وكالة ناسا (NASA PSI)</strong> في محطة الفضاء الدولية (ISS)، معايير السلامة الفضائية <strong>NASA-STD-6001</strong>، وبيانات قمرة القيادة الحية.<br><br>
+                        كيف يمكنني مساعدتك في تأمين المركبة اليوم؟
+                        <div><span class="source-pill">📚 NASA PSI & NTRS Knowledge Grounding</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Questions Prompt Bar -->
+            <div class="quick-prompts">
+                <span style="color: #64748b; font-size: 12px; align-self: center; margin-left: 4px;">استعلامات NASA السريعة:</span>
+                <div class="prompt-chip" onclick="askQuestion('ما هي أبحاث NASA PSI للاحتراق في الفضاء؟')">🚀 أبحاث NASA PSI للاحتراق</div>
+                <div class="prompt-chip" onclick="askQuestion('ما هي موارد تحدي ناسا Flame in Freefall Resources؟')">🏆 دليل موارد تحدي ناسا (Resources)</div>
+                <div class="prompt-chip" onclick="askQuestion('ابحث لي في NASA NTRS عن أوراق بحثية حول BASS-II microgravity')">📄 أوراق NASA NTRS البحثية</div>
+                <div class="prompt-chip" onclick="askQuestion('ما هو اللهب البارد (Cool Flame) ولماذا هو خطير؟')">🔬 ما هو اللهب البارد؟</div>
+                <div class="prompt-chip" onclick="askQuestion('ما الفرق بين الاحتراق في الفضاء واحتراق الأرض؟')">🌍 احتراق الفضاء vs الأرض</div>
+                <div class="prompt-chip" onclick="askQuestion('ماذا حدث في حريق محطة مير 1997؟')">🔥 حريق محطة مير 1997</div>
+                <div class="prompt-chip" onclick="askQuestion('ما هو تقييم الخطر الحالي للمركبة؟')">📊 فحص خطر المركبة اللحظي</div>
+            </div>
+
+            <!-- Input Bar -->
+            <div class="chat-input-bar">
+                <input type="text" id="chat_input" class="chat-input" placeholder="اكتب سؤالك هنا لرائد الفضاء الآلي..." onkeypress="handleKeyPress(event)">
+                <button class="chat-send-btn" onclick="sendChatMessage()">إرسال ↵</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Starfield
+        const starCanvas = document.getElementById('starfield');
+        const starCtx = starCanvas ? starCanvas.getContext('2d') : null;
+        let stars = [];
+        if (starCanvas) {
+            starCanvas.width = window.innerWidth;
+            starCanvas.height = window.innerHeight;
+            for (let i = 0; i < 180; i++) {
+                stars.push({
+                    x: Math.random() * starCanvas.width,
+                    y: Math.random() * starCanvas.height,
+                    size: Math.random() * 1.6 + 0.4,
+                    alpha: Math.random() * 0.8 + 0.2,
+                    speed: Math.random() * 0.3 + 0.05
+                });
+            }
+            function renderStars() {
+                starCtx.clearRect(0, 0, starCanvas.width, starCanvas.height);
+                for (let s of stars) {
+                    s.y -= s.speed;
+                    if (s.y < 0) s.y = starCanvas.height;
+                    starCtx.beginPath();
+                    starCtx.arc(s.x, s.y, s.size, 0, Math.PI * 2);
+                    starCtx.fillStyle = `rgba(220, 240, 255, ${s.alpha})`;
+                    starCtx.fill();
+                }
+                requestAnimationFrame(renderStars);
+            }
+            renderStars();
+        }
+
+        function handleKeyPress(e) {
+            if (e.key === 'Enter') {
+                sendChatMessage();
+            }
+        }
+
+        function askQuestion(text) {
+            document.getElementById('chat_input').value = text;
+            sendChatMessage();
+        }
+
+        function formatAstroMessage(rawText) {
+            if (!rawText) return '';
+            let txt = String(rawText)
+                .replace(/\\mu\s*g/g, 'μg')
+                .replace(/\\mu\b/g, 'μ')
+                .replace(/\\text\{--\}/g, '–')
+                .replace(/\\text\{([^\}]+)\}/g, '$1')
+                .replace(/\\approx/g, '≈')
+                .replace(/\\sim/g, '~')
+                .replace(/\\times/g, '×')
+                .replace(/\\le\b|\\leq\b/g, '≤')
+                .replace(/\\ge\b|\\geq\b/g, '≥')
+                .replace(/\\%/g, '%')
+                .replace(/\bCO_?2\b/g, 'CO₂')
+                .replace(/\bH_?2O\b/g, 'H₂O')
+                .replace(/\bO_?2\b/g, 'O₂')
+                .replace(/\$([^$]+)\$/g, '$1');
+
+            if (typeof marked !== 'undefined' && marked.parse) {
+                try {
+                    marked.setOptions({ gfm: true, breaks: true });
+                    return marked.parse(txt);
+                } catch (e) {
+                    console.warn("marked.parse fallback:", e);
+                }
+            }
+
+            return txt
+                .replace(/\[([^\]]+)\]\((https?:\/\/[^\)]+)\)/g, '<a href="$2" target="_blank" rel="noopener" style="color:#00f0ff;text-decoration:underline;font-weight:600;">$1 ↗</a>')
+                .replace(/`([^`]+)`/g, '<code style="background:rgba(255,255,255,0.12);padding:2px 5px;border-radius:4px;font-family:monospace;color:#00f0ff;">$1</code>')
+                .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                .replace(/\*(.*?)\*/g, '<em>$1</em>')
+                .replace(/^#### (.*?)$/gm, '<h5 style="color:#00f0ff;margin:8px 0 4px 0;">$1</h5>')
+                .replace(/^### (.*?)$/gm, '<h4 style="color:#00f0ff;margin:10px 0 4px 0;">$1</h4>')
+                .replace(/^## (.*?)$/gm, '<h3 style="color:#ffb454;margin:12px 0 6px 0;">$1</h3>')
+                .replace(/^---$/gm, '<hr style="border:none;border-top:1px solid rgba(255,255,255,0.15);margin:12px 0;">')
+                .replace(/^[•\*] (.*?)$/gm, '<div style="margin:4px 0 4px 14px;">• $1</div>')
+                .replace(/\n\n/g, '<br><br>')
+                .replace(/\n/g, '<br>');
+        }
+
+        async function sendChatMessage() {
+            const inputEl = document.getElementById('chat_input');
+            const query = inputEl.value.trim();
+            if (!query) return;
+
+            const chatMessages = document.getElementById('chat_messages');
+
+            // Append User Message
+            const userRow = document.createElement('div');
+            userRow.className = 'message-row user';
+            userRow.innerHTML = `
+                <div class="msg-avatar">👨‍🚀</div>
+                <div class="msg-bubble">${escapeHtml(query)}</div>
+            `;
+            chatMessages.appendChild(userRow);
+            inputEl.value = '';
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+
+            // Loading indicator
+            const loadingRow = document.createElement('div');
+            loadingRow.className = 'message-row bot';
+            loadingRow.id = 'loading_row';
+            loadingRow.innerHTML = `
+                <div class="msg-avatar">🤖</div>
+                <div class="msg-bubble" style="color: #00f0ff;">جاري استرجاع البيانات وتحليل المعطيات الفضائية...</div>
+            `;
+            chatMessages.appendChild(loadingRow);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+
+            try {
+                // Fetch recent telemetry if available
+                let telemetry = null;
+                try {
+                    const telRes = await fetch('/api/tri-hazard/evaluate', {
+                        method: 'POST',
+                        headers: {'Content-Type': 'application/json'},
+                        body: JSON.stringify({
+                            material_type: "PMMA", geometry: "Film", color: "standard",
+                            thickness_mm: 1.0, width_cm: 2.0, fan_display: 50.0, o2_initial: 21.0,
+                            liquid_fuel: "Heptane", d0_mm: 3.0, x_co2: 0.0, x_he: 0.0,
+                            gas_fuel: "ethane", pressure_bar: 1.0, xf: 0.40, mhc_mg_s: 1.2
+                        })
+                    });
+                    if (telRes.ok) telemetry = await telRes.json();
+                } catch (e) {}
+
+                const res = await fetch('/api/chat', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({ message: query, telemetry: telemetry })
+                });
+
+                const data = await res.json();
+                const loadEl = document.getElementById('loading_row');
+                if (loadEl) loadEl.remove();
+
+                // Format markdown & clean symbols
+                let formatted = formatAstroMessage(data.response || '');
+
+                // If images returned from NASA Images API
+                let mediaHtml = '';
+                if (data.images && data.images.length > 0) {
+                    data.images.forEach(img => {
+                        mediaHtml += `
+                            <div style="margin-top: 12px; background: rgba(0,0,0,0.4); border: 1px solid rgba(0,240,255,0.3); border-radius: 8px; overflow: hidden; max-width: 380px;">
+                                <img src="${img.thumb}" alt="${img.title}" style="width: 100%; max-height: 200px; object-fit: cover;" onerror="this.style.display='none'">
+                                <div style="padding: 8px 12px; font-size: 11px; color: #94a3b8;">
+                                    <strong style="color: #00f0ff;">📸 NASA Imagery:</strong> ${escapeHtml(img.title)}
+                                </div>
+                            </div>
+                        `;
+                    });
+                }
+
+                const botRow = document.createElement('div');
+                botRow.className = 'message-row bot';
+                botRow.innerHTML = `
+                    <div class="msg-avatar">🤖</div>
+                    <div class="msg-bubble">
+                        ${formatted}
+                        ${mediaHtml}
+                        <div><span class="source-pill">📡 Source: ${data.source || 'NASA Knowledge Base'}</span></div>
+                    </div>
+                `;
+                chatMessages.appendChild(botRow);
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+
+            } catch (err) {
+                const loadEl = document.getElementById('loading_row');
+                if (loadEl) loadEl.remove();
+                console.error("Chat error:", err);
+            }
+        }
+
+        function escapeHtml(text) {
+            return text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+        }
+    </script>
+</body>
+</html>

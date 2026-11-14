@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AstroFlame | Predicting Fire in Zero Gravity</title>
+<link rel="stylesheet" href="/static/css/style.css?v=2.2">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body>
+<div class="nebula"></div>
+<canvas id="starfield"></canvas>
+
+<header class="nav">
+  <a class="brand" href="#top"><span class="brand-dot"></span>ASTRO<b>FLAME</b></a>
+  <nav>
+    <a href="#why">Why it matters</a>
+    <a href="#console">Mission console</a>
+    <a href="#console" onclick="switchToTab('trihazard')">Tri-Hazard</a>
+    <a href="#console" onclick="switchToTab('chat')">AI Assistant</a>
+    <a href="#credits">Credits</a>
+  </nav>
+  <span class="pill"><i></i>ENGINE ONLINE</span>
+</header>
+
+<main id="top">
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-copy">
+    <p class="eyebrow">NASA PSI &middot; ISS &amp; DROP-TOWER DATA</p>
+    <h1>Fire doesn't rise in space.<br><em>It floats.</em></h1>
+    <p class="lead">Without gravity, flames turn into silent glowing spheres, and a fire aboard a spacecraft can't be outrun. AstroFlame learns from real NASA microgravity experiments to estimate whether a fire will <strong>survive or starve</strong> &mdash; and tells you how far to trust every estimate.</p>
+    <div class="cta">
+      <a class="btn" href="#console">Enter mission console</a>
+      <a class="btn ghost" href="#console" onclick="switchToTab('chat')">Talk to AI Assistant</a>
+      <a class="btn ghost" href="#why">Why this matters</a>
+    </div>
+    <div class="stats">
+      <div><b data-count="1205">0</b><span>real experimental runs</span></div>
+      <div><b data-count="5">0</b><span>NASA PSI experiments</span></div>
+      <div><b data-count="7">0</b><span>AI prediction models</span></div>
+      <div><b>0 g</b><span>buoyancy in orbit</span></div>
+    </div>
+  </div>
+  <svg class="orrery" viewBox="0 0 520 520" aria-hidden="true">
+    <defs><radialGradient id="core"><stop offset="0" stop-color="#fff6d8"/><stop offset=".3" stop-color="#ffb454"/><stop offset=".7" stop-color="#ff5a36" stop-opacity=".45"/><stop offset="1" stop-color="#ff5a36" stop-opacity="0"/></radialGradient></defs>
+    <circle cx="260" cy="260" r="250" fill="url(#core)" opacity=".25" class="breathe"/>
+    <g fill="none" stroke="rgba(170,180,255,.25)"><circle cx="260" cy="260" r="120"/><circle cx="260" cy="260" r="170" stroke-dasharray="2 9"/><circle cx="260" cy="260" r="228"/></g>
+    <circle cx="260" cy="260" r="64" fill="url(#core)" class="breathe"/><circle cx="260" cy="260" r="9" fill="#fff"/>
+    <g class="spin s1"><g transform="translate(380 260)"><rect x="-9" y="-1.5" width="18" height="3" fill="#7cc8ff"/><rect x="-2" y="-7" width="4" height="14" fill="#cfe9ff"/></g></g>
+    <g class="spin s2"><circle cx="260" cy="90" r="4" fill="#6ef3c5"/></g>
+    <g class="spin s3"><circle cx="488" cy="260" r="3" fill="#ffb454"/></g>
+    <text x="392" y="250" class="svg-lbl">ISS &middot; 408 km</text>
+    <text x="260" y="352" class="svg-lbl" text-anchor="middle">SPHERICAL FLAME &middot; g&#8776;0</text>
+  </svg>
+</section>
+
+<!-- WHY IT MATTERS -->
+<section id="why" class="section">
+  <p class="eyebrow">THE MISSION</p>
+  <h2>Predict the fire <em>before</em> it ignites.</h2>
+  <div class="why">
+    <article class="panel"><span class="num">01</span><h3>No up, no down</h3><p>Buoyancy vanishes. Hot gas stops rising, so flames wrap into spheres fed only by slow molecular diffusion &mdash; behaving nothing like fire on Earth.</p></article>
+    <article class="panel"><span class="num">02</span><h3>No way out</h3><p>A spacecraft is a sealed lifeboat. The crew can't evacuate or wait for help, and cabin airflow can either feed a fire or blow it out. Prevention is the only defense.</p></article>
+    <article class="panel"><span class="num">03</span><h3>No room for guesswork</h3><p>Every ISS experiment is rare and costly. Our models learn from 1,205 real runs to estimate outcomes for untested settings &mdash; and flags every estimate that leaves the data. A research aid for future Moon and Mars missions.</p></article>
+  </div>
+</section>
+
+<!-- CONSOLE -->
+<section id="console" class="section">
+  <p class="eyebrow">MISSION CONSOLE</p>
+  <h2>Choose a station. <em>Run the physics.</em></h2>
+  <p class="disclaimer">Research &amp; education suite powered by real NASA PSI datasets. Every prediction reports confidence levels, warns on out-of-distribution inputs, and links directly to official NASA combustion physics.</p>
+  
+  <nav class="tabs">
+    <button class="tab active" data-tab="bass"><i>01</i>Solid fire safety<small>BASS-II</small></button>
+    <button class="tab" data-tab="flex"><i>02</i>Droplet physics<small>FLEX</small></button>
+    <button class="tab" data-tab="cfig"><i>03</i>Gaseous flames<small>CFI-G</small></button>
+    <button class="tab" data-tab="spice"><i>04</i>Soot &amp; smoke<small>SPICE</small></button>
+    <button class="tab" data-tab="benchmark"><i>05</i>Verification<small>ACCURACY</small></button>
+    <button class="tab" data-tab="trihazard"><i>06</i>Tri-Hazard Engine<small>ASTROCOMMANDER</small></button>
+    <button class="tab" data-tab="chat"><i>07</i>AI Assistant<small>CHATBOT</small></button>
+  </nav>
+
+  <!-- PANE 1: BASS-II -->
+  <div id="pane-bass" class="pane active"><div class="grid">
+    <div class="panel"><h4>Cabin &amp; material</h4><div class="controls" id="ctl-bass"></div></div>
+    <div class="panel"><h4>AI flight-safety assessment</h4>
+      <div class="viewport"><canvas id="flameCanvas"></canvas><div class="vp-cap" id="flame_status_text">SPHERICAL FLAME ENGINE</div></div>
+      <div id="bass_banner" class="banner mid">Analyzing compartment safety&hellip;</div>
+      <div class="read"><div><small>Extinction probability</small><b id="bass_ext_prob" class="c-blue">--%</b></div><div><small>Toxic CO (indicative)</small><b id="bass_co_ppm" class="c-amber">-- ppm</b></div><div class="wide"><small>Non-extinction risk (100 &minus; P)</small><b id="bass_hazard_idx">--</b></div></div><div class="warn" id="warn-bass"></div><p class="quality" id="q-bass"></p>
+    </div>
+  </div></div>
+
+  <!-- PANE 2: FLEX -->
+  <div id="pane-flex" class="pane"><div class="grid">
+    <div class="panel"><h4>Droplet &amp; atmosphere</h4><div class="controls" id="ctl-flex"></div></div>
+    <div class="panel"><h4>d&sup2;-law decay</h4>
+      <div class="read"><div><small>Burning rate K</small><b id="flex_k_val" class="c-blue">-- mm&sup2;/s</b></div><div><small>Total lifetime</small><b id="flex_burn_time" class="c-mint">-- s</b></div><div class="wide"><small>Projected end mode</small><b id="flex_term_mode" class="c-amber">--</b></div></div>
+      <div class="chart-box"><canvas id="flexChart"></canvas></div><div class="warn" id="warn-flex"></div><p class="quality" id="q-flex"></p>
+    </div>
+  </div></div>
+
+  <!-- PANE 3: CFI-G -->
+  <div id="pane-cfig" class="pane"><div class="grid">
+    <div class="panel"><h4>Co-flow burner inputs</h4><div class="controls" id="ctl-cfig"></div></div>
+    <div class="panel"><h4>Gaseous extinction projection</h4>
+      <div class="read"><div><small>Flame duration</small><b id="cfig_time_val" class="c-blue">-- s</b></div><div><small>Self-extinction probability</small><b id="cfig_ext_prob" class="c-mint">--%</b></div></div>
+      <div class="banner safe">Microgravity removes buoyant acceleration, so low-strain diffusion flames can starve and self-extinguish.</div><div class="warn" id="warn-cfig"></div><p class="quality" id="q-cfig"></p>
+    </div>
+  </div></div>
+
+  <!-- PANE 4: SPICE -->
+  <div id="pane-spice" class="pane"><div class="grid">
+    <div class="panel"><h4>Soot initiation</h4><div class="controls" id="ctl-spice"></div></div>
+    <div class="panel"><h4>Critical smoke-point dynamics</h4>
+      <div class="read"><div class="wide"><small>Critical fuel flow at smoke point</small><b id="spice_flow_val" class="c-amber">-- mg/s</b></div></div>
+      <div class="banner safe">With no buoyant flow, fuel stays in the flame longer, soot builds up faster and the smoke-point threshold shifts.</div><div class="warn" id="warn-spice"></div><p class="quality" id="q-spice"></p>
+    </div>
+  </div></div>
+
+  <!-- PANE 5: VERIFICATION -->
+  <div id="pane-benchmark" class="pane"><div class="panel">
+    <h4>Model verification &middot; held-out experimental settings</h4>
+    <div class="gauges" id="gauges"></div>
+    <div class="tbl-wrap"><table id="valtbl"></table></div>
+    <p class="note"><b>Random split</b> lets repeated runs of the same setting appear in both training and test data (optimistic). <b>Unseen settings</b> holds out whole experimental settings &mdash; the honest test. Baseline = naive guess (majority class, or the median).</p>
+  </div></div>
+
+  <!-- PANE 6: TRI-HAZARD ENGINE (ASTROCOMMANDER) -->
+  <div id="pane-trihazard" class="pane">
+    <div class="tri-deck">
+      <div class="panel">
+        <h4>Compound Multi-Phase Threat (Solid &middot; Liquid &middot; Gas)</h4>
+        <div class="tri-meter">
+          <div class="tri-circle" id="tri_circle">
+            <div class="tri-num" id="tri_score">--</div>
+            <div class="tri-lbl">HAZARD INDEX</div>
+          </div>
+          <div class="tri-status">
+            <h3 id="tri_threat_title" style="color: var(--mint);">CALCULATING MULTI-PHASE THREAT...</h3>
+            <p id="tri_threat_desc">Evaluating concurrent risk across cabin materials, coolant droplets, and pressurized gas lines.</p>
+            <div style="margin-top: 8px;">
+              <span class="chip medium" id="tri_bottleneck_chip">BOTTLENECK: SCANNING...</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="tri-bars">
+          <div class="t-bar-item">
+            <div class="t-bar-hdr"><span>🟫 SOLID PHASE (BASS-II: 87.2% Acc)</span><span id="tri_lbl_solid" style="color: var(--cool);">--%</span></div>
+            <div class="t-track"><div class="t-fill" id="tri_bar_solid" style="width: 0%; background: var(--cool);"></div></div>
+          </div>
+          <div class="t-bar-item">
+            <div class="t-bar-hdr"><span>💧 LIQUID DROPLETS (FLEX: 77.7% Acc)</span><span id="tri_lbl_liquid" style="color: var(--ember);">--%</span></div>
+            <div class="t-track"><div class="t-fill" id="tri_bar_liquid" style="width: 0%; background: var(--ember);"></div></div>
+          </div>
+          <div class="t-bar-item">
+            <div class="t-bar-hdr"><span>💨 GASEOUS JETS (CFI-G: 87.4% Acc)</span><span id="tri_lbl_gas" style="color: var(--mint);">--%</span></div>
+            <div class="t-track"><div class="t-fill" id="tri_bar_gas" style="width: 0%; background: var(--mint);"></div></div>
+          </div>
+        </div>
+
+        <div class="action-box">
+          <div style="font: 500 12px var(--mono); color: var(--flame); text-transform: uppercase;">🤖 AstroCommander AI &middot; Autonomous Directives</div>
+          <div class="action-list" id="tri_action_list">
+            <div class="action-item"><span>▶</span> <span>Evaluating telemetry...</span></div>
+          </div>
+          <div style="font-size: 12px; color: var(--dim); margin-bottom: 12px;">
+            Projected Hazard After Mitigation: <strong id="tri_proj_score" style="color: var(--mint); font-family: var(--mono);">--</strong>
+          </div>
+          <button class="btn" style="width: 100%;" id="tri_btn_execute" onclick="executeAstroCommanderDirective()">
+            ⚡ EXECUTE AI MITIGATION DIRECTIVE
+          </button>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h4>Flight Deck Controls &middot; Synchronized Matrix</h4>
+        <div style="display: grid; gap: 14px;">
+          <label class="ctl"><span>Solid Spec (BASS-II)<b id="v_t_mat">PMMA</b></span>
+            <select id="t_mat" onchange="runTriHazard()"><option value="PMMA">PMMA (Cast Acrylic Glass)</option><option value="SIBAL">SIBAL (Cotton/Fiberglass Space Fabric)</option><option value="Nomex">Nomex (Flame-Resistant Space Suit)</option></select>
+          </label>
+          <label class="ctl"><span>Ventilation Airflow<b id="v_t_fan">50</b></span>
+            <input type="range" id="t_fan" min="10" max="80" step="1" value="50" oninput="runTriHazard()">
+          </label>
+          <label class="ctl"><span>Cabin O₂ Vol%<b id="v_t_o2">21.0 %</b></span>
+            <input type="range" id="t_o2" min="15" max="34" step="0.5" value="21.0" oninput="runTriHazard()">
+          </label>
+          <label class="ctl"><span>Liquid Fuel Droplet (FLEX)<b id="v_t_lfuel">Heptane</b></span>
+            <select id="t_lfuel" onchange="runTriHazard()"><option value="Heptane">Heptane (Droplet Disruption Risk)</option><option value="Methanol">Methanol (Clean Burning)</option></select>
+          </label>
+          <label class="ctl"><span>Droplet Initial d₀<b id="v_t_d0">3.0 mm</b></span>
+            <input type="range" id="t_d0" min="1.0" max="5.0" step="0.1" value="3.0" oninput="runTriHazard()">
+          </label>
+          <label class="ctl"><span>CO₂ Thermal Quencher (X_CO₂)<b id="v_t_co2">0.00</b></span>
+            <input type="range" id="t_co2" min="0.0" max="0.35" step="0.02" value="0.00" oninput="runTriHazard()">
+          </label>
+          <label class="ctl"><span>Chamber Pressure<b id="v_t_press">1.0 bar</b></span>
+            <input type="range" id="t_press" min="0.5" max="3.0" step="0.1" value="1.0" oninput="runTriHazard()">
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PANE 7: AI FLIGHT ASSISTANT (CHATBOT) -->
+  <div id="pane-chat" class="pane">
+    <div class="panel">
+      <h4>AstroCommander AI &middot; NASA Space Combustion Assistant</h4>
+      <div class="chat-container">
+        <div class="chat-feed" id="chat_feed">
+          <div class="c-msg bot">
+            <div class="c-avatar">🤖</div>
+            <div class="c-bubble">
+              <strong>Welcome aboard, Commander.</strong><br><br>
+              I am your <strong>AstroCommander AI Flight Assistant</strong>, grounded directly in the <strong>NASA Physical Sciences Informatics (PSI)</strong> database and live <strong>NASA Open APIs (NTRS &amp; Imagery)</strong>.<br><br>
+              Ask me about microgravity combustion physics, cool flames, historical space fires (Mir, Apollo), or query the live telemetry of your ship.
+              <div style="margin-top: 10px;"><span class="chip high">NASA PSI &amp; NTRS GROUNDED</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="c-prompts">
+          <span style="color: var(--dim); font: 500 11px var(--mono); align-self: center; margin-right: 6px;">QUICK PROMPTS:</span>
+          <div class="c-chip" onclick="askChat('What are cool flames and why are they dangerous in microgravity?')">🔬 Cool Flames Physics</div>
+          <div class="c-chip" onclick="askChat('The difference between combustion on Earth and combustion in space')">🌍 Earth vs Space Combustion</div>
+          <div class="c-chip" onclick="askChat('What are the NASA PSI combustion investigations?')">🚀 NASA PSI Investigations</div>
+          <div class="c-chip" onclick="askChat('ابحث لي في NASA NTRS عن أوراق بحثية حول BASS-II microgravity')">📄 Live NASA NTRS Papers</div>
+          <div class="c-chip" onclick="askChat('What happened during the 1997 Mir space station fire?')">🔥 1997 Mir Station Fire</div>
+          <div class="c-chip" onclick="askChat('Assess the current spacecraft hazard level and explain the bottleneck.')">📊 Current Hazard Assessment</div>
+        </div>
+
+        <div class="c-input-bar">
+          <input type="text" id="chat_input" class="c-input" placeholder="Ask AstroCommander anything about microgravity fire safety..." onkeypress="if(event.key==='Enter') sendChat()">
+          <button class="c-send" onclick="sendChat()">Send ↵</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</section>
+</main>
+
+<footer id="credits" class="foot">
+  <p><b>AstroFlame</b> &middot; Microgravity Fire Safety Suite for NASA Space Apps Challenge &middot; Data from NASA PSI.</p>
+  <p>BASS-II: S. Bhattacharjee, S. Olson, J. T'ien &middot; FLEX: F. A. Williams &middot; SPICE &amp; CFI-G: NASA Glenn Research Center.</p>
+</footer>
+
+<script src="/static/js/app.js?v=2.2"></script>
+</body>
+</html>

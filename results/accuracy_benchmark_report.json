@@ -1,0 +1,64 @@
+{
+  "BASS_II": {
+    "classification": {
+      "test_accuracy": 0.8181818181818182,
+      "precision": 0.9,
+      "recall": 0.6428571428571429,
+      "f1_score": 0.75,
+      "roc_auc": 0.8364661654135339,
+      "cv5_accuracy_mean": 0.8827692307692308,
+      "cv5_accuracy_std": 0.06768811175806858,
+      "cv10_accuracy_mean": 0.8602564102564102,
+      "confusion_matrix": {
+        "TN": 18,
+        "FP": 1,
+        "FN": 5,
+        "TP": 9
+      }
+    },
+    "co_regression": {
+      "r2": 0.17938545036500964,
+      "mae_ppm": 107.56936440332912,
+      "rmse_ppm": 148.1476127549513,
+      "medae_ppm": 80.50927657527652
+    }
+  },
+  "FLEX": {
+    "burning_rate_regression": {
+      "test_r2": 0.46948265933151057,
+      "pearson_correlation": 0.7243853152066154,
+      "mae_mm2_s": 0.07693793859820441,
+      "rmse_mm2_s": 0.11940433345761185,
+      "cv5_r2_mean": -0.2040790662205499
+    },
+    "end_mode_classification": {
+      "test_accuracy": 0.7636363636363637,
+      "macro_f1": 0.551061388410786,
+      "weighted_f1": 0.723830386480989,
+      "cv5_accuracy_mean": 0.759057239057239
+    }
+  },
+  "CFI_G": {
+    "self_extinction_classification": {
+      "test_accuracy": 0.9545454545454546,
+      "precision": 0.9615384615384616,
+      "recall": 0.9615384615384616,
+      "f1_score": 0.9615384615384616,
+      "cv5_accuracy_mean": 0.8171428571428571
+    },
+    "burn_time_regression": {
+      "r2": 0.3213317226424969,
+      "mae_sec": 22.598067809801886,
+      "rmse_sec": 49.769106245308535
+    }
+  },
+  "SPICE": {
+    "smoke_point_regression": {
+      "test_r2": 0.5772295165265264,
+      "pearson_correlation": 0.7624009189206404,
+      "mae_mg_s": 0.3800548921475713,
+      "rmse_mg_s": 0.5327423429179086,
+      "cv5_r2_mean": -0.1398423467048795
+    }
+  }
+}
